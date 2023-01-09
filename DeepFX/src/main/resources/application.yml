@@ -1,1 +1,19 @@
+server:
+  port: 4000
 
+spring:
+  application:
+    name: DeepFXServer
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:mysql://database-1.cekg2t7qwqmr.ap-northeast-2.rds.amazonaws.com/DeepFX
+    username: admin
+    password: q3143118
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  sql:
+    init:
+      platform: mysql
