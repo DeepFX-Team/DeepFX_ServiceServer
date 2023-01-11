@@ -7,9 +7,18 @@ public enum BaseServerStatus {
 
 
     /**
-     * 200 : 성공
+     * 1000 : 성공
      * */
-    SUCCESS(true, 200, "Request Success");
+    SUCCESS(true, 1000, "Request Success"),
+
+    /**
+     * 9000: Jwt
+     * */
+    JWT_NOT_EXIST(true, 9001, "Jwt Token Not Exist"),
+    INVALID_SIGNATURE(true, 9002, "Invalid Signature"),
+    INVALID_JWT(true, 9003, "Invalid Jwt Token"),
+    EXPIRED_TOKEN(true, 9004, "Jwt Token Expired"),
+    UNSUPPORTED_JWT(true, 9005, "Not Our Token");
 
     private final boolean isSuccess;
     private final int returnCode;
