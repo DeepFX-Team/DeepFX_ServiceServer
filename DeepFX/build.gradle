@@ -45,6 +45,10 @@ dependencies {
 
 	//Jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+	//S3
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+
 }
 
 tasks.named('test') {
