@@ -17,3 +17,18 @@ spring:
   sql:
     init:
       platform: mysql
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+logging:
+  level:
+    com.amazonaws.util.EC2MetadataUtils: error
