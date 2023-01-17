@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
-public class jwtUtility {
+public class JwtUtility {
 
     /**
      * Jwt Token 생성 메서드
@@ -46,6 +46,9 @@ public class jwtUtility {
                 .compact();
     }
 
+    /**
+     * 헤더에서 AccessToken 파싱 메서드
+     * */
     public String getJwt(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         return request.getHeader("ACCESS-TOKEN");

@@ -27,7 +27,7 @@ public class BaseResponse<T> {
         this.result = result;
     }
 
-    //요청 살퍄
+    //요청 실패
     public BaseResponse(BaseServerStatus status){
         this.isSuccess = status.isSuccess();
         this.returnCode = status.getReturnCode();
