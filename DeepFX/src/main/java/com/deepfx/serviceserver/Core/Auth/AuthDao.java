@@ -1,5 +1,7 @@
 package com.deepfx.serviceserver.Core.Auth;
 
+import com.deepfx.serviceserver.Core.Auth.Model.PostSignInReq;
+import com.deepfx.serviceserver.Core.Auth.Model.PostSignInRes;
 import com.deepfx.serviceserver.Util.SHA256;
 import com.deepfx.serviceserver.Core.Auth.Model.PostSignupReq;
 import com.deepfx.serviceserver.Core.Auth.Model.PostSignupRes;
@@ -16,6 +18,9 @@ public class AuthDao {
     @Autowired
     public void getDataSource(DataSource dataSource) { this.jdbcTemplate = new JdbcTemplate(dataSource);}
 
+    /**
+     * 회원가입 API - Dao
+     * */
     public PostSignupRes userSignUp(PostSignupReq postSignupReq) {
         String queryString = "insert into User (userId,password, name, `group`, email) values(?, ?, ?, ?, ?);";
         Object[] queryParams = new Object[] {
@@ -29,5 +34,50 @@ public class AuthDao {
         this.jdbcTemplate.update(queryString, queryParams);
 
         return new PostSignupRes(true);
+    }
+
+    /**
+     * 로그인 API - Dao 로그인 처리
+     * */
+    public boolean userSignIn(PostSignInReq postSignInReq) {
+        String queryString = "select count(userIdx) from User where userId = ? and password = ?";
+        Object[] queryParams = new Object[] {
+                postSignInReq.getId(),
+                postSignInReq.getPassword()
+        };
+
+        return this.jdbcTemplate.queryForObject(queryString, int.class, queryParams) > 0;
+    }
+
+    /**
+     * 로그인 API - Dao 토큰 발급 userIdx 처리
+     * */
+    public int getUserIdx(PostSignInReq postSignInReq) {
+        String queryString = "select userIdx from User where userId = ? and password = ?";
+        Object[] queryParams = new Object[] {
+                postSignInReq.getId(),
+                postSignInReq.getPassword()
+        };
+
+        return this.jdbcTemplate.queryForObject(queryString, int.class ,queryParams);
+    }
+
+    /**
+     * 로그인 API - Dao 리프래시 토큰 업데이트
+     * */
+    public void updateRefreshToken(int userIdx, String refreshToken) {
+        String queryString = "update User set refreshToken = ? where userIdx = ?";
+
+        this.jdbcTemplate.update(queryString, refreshToken, userIdx);
+    }
+
+    public boolean checkRefreshToken(int userIdx, String refreshToken) {
+        String queryString = "select count(userIdx) from User where userIdx = ? and refreshToken = ?";
+        Object[] queryParams = new Object[] {
+                userIdx,
+                refreshToken
+        };
+
+        return this.jdbcTemplate.queryForObject(queryString, int.class, queryParams) > 0;
     }
 }
