@@ -38,7 +38,7 @@ public class AuthController {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
             @ApiResponse(code = 4000, message = "Check Email Pattern"),
-            @ApiResponse(code = 4001, message = "암호화에 실패하였습니다.")
+            @ApiResponse(code = 4000, message = "암호화에 실패하였습니다.")
     })
     @PostMapping("/signup")
     public BaseResponse<PostSignupRes> userSignUp(@RequestBody PostSignupReq postSignupReq) {
@@ -60,7 +60,7 @@ public class AuthController {
     @ApiResponses(value = {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
-            @ApiResponse(code = 4001, message = "암호화에 실패하였습니다."),
+            @ApiResponse(code = 4000, message = "암호화에 실패하였습니다."),
             @ApiResponse(code = 4002, message = "아이디와 비밀번호를 확인해주세요")
 
     })
