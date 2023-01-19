@@ -22,6 +22,9 @@ public class PlanProvider {
         this.planDao = planDao;
     }
 
+    /**
+     * 플랜 리스트 조회 API - Provider
+     * */
     public List<GetPlanList> getPlanList() throws BaseException {
         try{
             return planDao.getPlanList();
