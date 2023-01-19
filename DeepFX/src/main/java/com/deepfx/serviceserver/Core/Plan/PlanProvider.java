@@ -2,29 +2,32 @@ package com.deepfx.serviceserver.Core.Plan;
 
 import com.deepfx.serviceserver.Base.BaseException;
 import com.deepfx.serviceserver.Base.BaseServerStatus;
-import com.deepfx.serviceserver.Core.Plan.Model.PatchPlanSelectRes;
+import com.deepfx.serviceserver.Core.Plan.Model.GetPlanList;
+import com.deepfx.serviceserver.Core.User.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class PlanService {
+public class PlanProvider {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private final PlanDao planDao;
 
-    public PlanService(PlanDao planDao) {
+    public PlanProvider(PlanDao planDao) {
         this.planDao = planDao;
     }
 
     /**
-     * 플랜 선택 API - Service
+     * 플랜 리스트 조회 API - Provider
      * */
-    public PatchPlanSelectRes selectPlan(int planIdx, int userIdx) throws BaseException {
+    public List<GetPlanList> getPlanList() throws BaseException {
         try{
-            return planDao.selectPlan(planIdx, userIdx);
+            return planDao.getPlanList();
         }catch (Exception exception) {
             throw new BaseException(BaseServerStatus.DATABASE_ERROR);
         }
