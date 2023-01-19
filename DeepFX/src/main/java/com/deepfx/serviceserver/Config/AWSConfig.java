@@ -4,6 +4,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,9 +13,12 @@ public class AWSConfig {
     /**
      * Key는 중요정보이기 때문에 properties 파일에 저장한 뒤 가져와 사용하는 방법이 좋습니다.
      */
-    private final String iamAccessKey = "AKIAXZF3GNJ5RO2E4EXD"; // IAM Access Key
-    private final String iamSecretKey = "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"; // IAM Secret Key
-    private final String region = "ap-northeast-2"; // Bucket Region
+    @Value("${cloud.aws.credentials.access-key}")
+    private String iamAccessKey;// IAM Access Key
+    @Value("${cloud.aws.credentials.secret-key}")
+    private String iamSecretKey; // IAM Secret Key
+    @Value("${cloud.aws.region.static}")
+    private String region; // Bucket Region
 
 
     @Bean
