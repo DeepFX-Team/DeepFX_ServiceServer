@@ -51,7 +51,7 @@ public class AuthService {
         try{
             postSignInReq.setPassword(SHA256.encrypt(postSignInReq.getPassword()));
         }catch (NoSuchAlgorithmException exception) {
-            logger.error(exception.getMessage(), "Error in signup encrypt");
+            logger.error(exception.getMessage(), "Error in sign in encrypt");
             throw new BaseException(BaseServerStatus.FAIL_TO_ENCRYPT);
         }
 
