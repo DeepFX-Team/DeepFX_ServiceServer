@@ -22,6 +22,19 @@ public enum BaseServerStatus {
     NOT_A_EMAIL(false, 4000, "Check Email Pattern"),
     FAIL_TO_ENCRYPT(false, 4001, "암호화에 실패하였습니다."),
     FAIL_TO_LOGIN(false, 4002, "아이디 비밀번호를 확인해 주세요"),
+
+    /**
+     * 5000: User
+     * */
+
+    /**
+     * 6000: Plan
+     * */
+
+    /**
+     * 7000: Sound
+     * */
+    FILE_UPLOAD_FAIL(false, 7000, "파일 업로드에 실패하였습니다."),
     /**
      * 9000: Jwt
      * */
