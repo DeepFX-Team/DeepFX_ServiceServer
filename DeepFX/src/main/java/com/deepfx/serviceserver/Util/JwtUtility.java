@@ -5,6 +5,7 @@ import com.deepfx.serviceserver.Base.BaseServerStatus;
 import com.deepfx.serviceserver.Config.SecretConstants;
 import com.deepfx.serviceserver.Util.Model.RefreshJwtRes;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -14,7 +15,6 @@ import java.util.Date;
 
 @Service
 public class JwtUtility {
-
     /**
      * Jwt Token 생성 메서드
      * */

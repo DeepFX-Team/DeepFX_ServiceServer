@@ -21,18 +21,8 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-
-cloud:
-  aws:
-    credentials:
-      access-key: AKIAXZF3GNJ5RO2E4EXD
-      secret-key: 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
-    s3:
-      bucket: deepfx
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
+  config:
+    import: classpath:/secret.yml
 
 logging:
   level:

@@ -1,5 +1,6 @@
 package com.deepfx.serviceserver.Core.Sound;
 
+import com.deepfx.serviceserver.Core.Sound.Model.PatchHistoryRes;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,9 @@ public class SoundDao {
     @Autowired
     public void getDataSource(DataSource dataSource) { this.jdbcTemplate = new JdbcTemplate(dataSource);}
 
+    /**
+     * 히스토리 생성 API - Dao
+     * */
     public PostHistoryRes saveHistory(String fileName, String fileUrl, int userIdx) {
 
         String insertSoundQuery = "insert into Sound(soundOwnerIdx, soundName, soundURL) values(?, ?, ?);";
@@ -36,9 +40,38 @@ public class SoundDao {
         boolean isSuccess = this.jdbcTemplate.update(insertHistoryQuery, insertHistoryParams) > 0;
 
         return new PostHistoryRes(isSuccess);
-        //Sound Table에 새 사운드 row insert하고
-        //방금 insert한 인덱스를 받아와서
-        //히스토리 테이블에 insert
-        //성공여부 판별하여 리턴
+    }
+
+    /**
+     * 히스토리 삭제 API - Dao
+     * */
+    public PatchHistoryRes removeHistory(int soundIdx, int userIdx) {
+        String queryString = "update History set status = 'INACTIVE' where soundIdx = ? and userIdx = ?;";
+
+        Object[] queryParams = new Object[] {
+                soundIdx,
+                userIdx
+        };
+
+        return new PatchHistoryRes(
+                this.jdbcTemplate.update(queryString, queryParams) > 0
+        );
+
+    }
+
+    /**
+     * 사운드 히스토리 삭제 API - Sound 존재 Validation
+     * @return true: 있음, false:없음
+     */
+    public boolean checkHistoryExist(int soundIdx, int userIdx) {
+        String queryString =
+                "select count(historyIdx) from History where soundIdx = ? and userIdx = ? and status = 'ACTIVE';";
+
+        Object[] queryParams = new Object[] {
+                soundIdx,
+                userIdx
+        };
+
+        return this.jdbcTemplate.queryForObject(queryString, int.class, queryParams) > 0;
     }
 }
