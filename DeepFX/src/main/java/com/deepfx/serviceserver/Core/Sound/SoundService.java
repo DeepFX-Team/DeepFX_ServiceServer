@@ -2,6 +2,7 @@ package com.deepfx.serviceserver.Core.Sound;
 
 import com.deepfx.serviceserver.Base.BaseException;
 import com.deepfx.serviceserver.Base.BaseServerStatus;
+import com.deepfx.serviceserver.Core.Sound.Model.PatchHistoryRes;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryRes;
 import com.deepfx.serviceserver.Util.S3Utility;
 import org.slf4j.Logger;
@@ -27,9 +28,13 @@ public class SoundService {
         this.s3Util = s3Util;
     }
 
+    /**
+     * 사운드 히스토리 생성 API - Service
+     * */
+    public PostHistoryRes saveHistory(MultipartFile soundFile, String fileName, int userIdx) throws BaseException {
 
-    public PostHistoryRes saveHistory(MultipartFile soundFile, String fileName, int userIdx) throws BaseException{
         String fileUrl;
+
         try{
             fileUrl = s3Util.upload2S3(soundFile, "sound");
         }catch (IOException exception){
@@ -46,4 +51,21 @@ public class SoundService {
         }
 
     }
+
+    /**
+     * 사운드 히스토리 삭제 API - Service
+     * */
+    public PatchHistoryRes removeHistory(int soundIdx, int userIdx) throws BaseException {
+        try{
+
+            if(!soundDao.checkHistoryExist(soundIdx, userIdx)) throw new BaseException(BaseServerStatus.HISTORY_NOT_EXIST);
+
+            return soundDao.removeHistory(soundIdx, userIdx);
+
+        }catch (Exception exception) {
+            logger.error(exception.getMessage(), "Error in History remove");
+            throw new BaseException(BaseServerStatus.DATABASE_ERROR);
+        }
+    }
+
 }
