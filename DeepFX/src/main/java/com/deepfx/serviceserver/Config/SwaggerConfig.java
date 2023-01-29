@@ -9,15 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -35,7 +33,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
     @Bean
     public Docket api(){
+        Server localServer = new Server("local", "http://localhost:4000", "local test server", Collections.emptyList(), Collections.emptyList());
+        Server serviceServer = new Server("service", "https://www.ljhhosting.com", "service server", Collections.emptyList(), Collections.emptyList());
+
         return new Docket(DocumentationType.OAS_30)
+                .servers(localServer, serviceServer)
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.deepfx.serviceserver"))
