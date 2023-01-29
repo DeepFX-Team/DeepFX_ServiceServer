@@ -49,9 +49,9 @@ public class JwtUtility {
     /**
      * 헤더에서 AccessToken 파싱 메서드
      * */
-    public static String getJwt(){
+    public String getJwt(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return request.getHeader("X-ACCESS-TOKEN");
+        return request.getHeader("ACCESS-TOKEN");
     }
 
     /**
@@ -68,7 +68,7 @@ public class JwtUtility {
      * AccessToken 만료 확인 메서드
      * @return 만료: true 아직 유효: false
      * */
-    public static boolean isJwtExpired(String accessToken){
+    public boolean isJwtExpired(String accessToken){
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(SecretConstants.JWT_KEY).parseClaimsJws(accessToken);
             return claims.getBody().getExpiration().before(new Date());
@@ -84,7 +84,7 @@ public class JwtUtility {
      * @return int
      * @throws BaseException
      * */
-    public static int getUserIdx(String accessToken) throws BaseException{
+    public int getUserIdx(String accessToken) throws BaseException{
         // JWT 가져오기
         if(accessToken == null || accessToken.length() == 0){
             throw new BaseException(BaseServerStatus.JWT_NOT_EXIST);
@@ -97,7 +97,7 @@ public class JwtUtility {
     /**
      * Jwt 파싱해서 userIdx를 리턴하는 메서드
      * */
-    public static int parseJwt(String accessToken) throws BaseException{
+    public int parseJwt(String accessToken) throws BaseException{
         Jws<Claims> claimsJws;
         try{
             claimsJws = Jwts.parser()
