@@ -35,6 +35,7 @@ public enum BaseServerStatus {
      * 7000: Sound
      * */
     FILE_UPLOAD_FAIL(false, 7000, "파일 업로드에 실패하였습니다."),
+    HISTORY_NOT_EXIST(false, 7001, "이미 삭제된 히스토리 입니다."),
     /**
      * 9000: Jwt
      * */
