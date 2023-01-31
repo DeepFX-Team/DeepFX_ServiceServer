@@ -53,6 +53,15 @@ public class PlanController {
      * 플랜 선택/변경 API - Controller
      * */
     @ApiOperation(value = "플랜 선택/변경 API", notes = "플랜 선택 API: 플랜 선택/변경시 사용하는 API 입니다. JWT 필수")
+    @ApiResponses(value = {
+            @ApiResponse(code = 1000, message = "Request Success"),
+            @ApiResponse(code = 3000, message = "Database Error"),
+            @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+            @ApiResponse(code = 9002, message = "Invalid Signature"),
+            @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+            @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+            @ApiResponse(code = 9004, message = "Not Our Token")
+    })
     @PatchMapping("/select/{planIdx}")
     public BaseResponse<PatchPlanSelectRes> selectPlan(@ApiParam(name = "planIdx", value = "선택할 플랜 인덱스") @PathVariable int planIdx){
         try{

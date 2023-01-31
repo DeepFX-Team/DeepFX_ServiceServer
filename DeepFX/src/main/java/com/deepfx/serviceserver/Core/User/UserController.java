@@ -46,7 +46,11 @@ public class UserController {
      @ApiResponses(value = {
              @ApiResponse(code = 1000, message = "Request Success"),
              @ApiResponse(code = 3000, message = "Database Error"),
-             @ApiResponse(code = 9004, message = "Jwt Token Expired")
+             @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+             @ApiResponse(code = 9002, message = "Invalid Signature"),
+             @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+             @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+             @ApiResponse(code = 9004, message = "Not Our Token")
      })
      @GetMapping("/info")
     public BaseResponse<GetUserInfoRes> getUserInfo() {
@@ -74,7 +78,11 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
-            @ApiResponse(code = 9004, message = "Jwt Token Expired")
+            @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+            @ApiResponse(code = 9002, message = "Invalid Signature"),
+            @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+            @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+            @ApiResponse(code = 9004, message = "Not Our Token")
     })
     @GetMapping("/history")
     public BaseResponse<List<GetUserHistoryRes>> getUserHistory() {
@@ -102,7 +110,11 @@ public class UserController {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
             @ApiResponse(code = 4000, message = "Check Email Pattern"),
-            @ApiResponse(code = 9004, message = "Jwt Token Expired")
+            @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+            @ApiResponse(code = 9002, message = "Invalid Signature"),
+            @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+            @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+            @ApiResponse(code = 9004, message = "Not Our Token")
     })
     @PatchMapping("/modify")
     public BaseResponse<PatchUserInfoRes> patchUserInfo(@RequestBody PatchUserInfoReq patchUserInfoReq) {

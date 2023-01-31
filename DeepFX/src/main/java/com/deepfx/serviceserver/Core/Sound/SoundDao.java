@@ -20,7 +20,7 @@ public class SoundDao {
      * */
     public PostHistoryRes saveHistory(String fileName, String fileUrl, int userIdx) {
 
-        String insertSoundQuery = "insert into Sound(soundOwnerIdx, soundName, soundURL) values(?, ?, ?);";
+        String insertSoundQuery = "insert into Sound(soundOwnerIdx, soundName, soundExt, soundURL) values(?, ?, ?, ?);";
         String getInsertedIdxQuery = "select last_insert_id()";
         String insertHistoryQuery = "insert into History(userIdx, soundIdx) values(?, ?)";
 

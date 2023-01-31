@@ -40,7 +40,11 @@ public class SoundController {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
             @ApiResponse(code = 7000, message = "파일 업로드에 실패하였습니다."),
-            @ApiResponse(code = 9004, message = "Jwt Token Expired")
+            @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+            @ApiResponse(code = 9002, message = "Invalid Signature"),
+            @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+            @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+            @ApiResponse(code = 9004, message = "Not Our Token")
     })
     @PostMapping(path = "/history", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse<PostHistoryRes> saveHistory(@RequestPart("soundFile") MultipartFile soundFile) {
@@ -67,8 +71,13 @@ public class SoundController {
     @ApiResponses(value = {
             @ApiResponse(code = 1000, message = "Request Success"),
             @ApiResponse(code = 3000, message = "Database Error"),
-            @ApiResponse(code = 7001, message = "파일 업로드에 실패하였습니다."),
-            @ApiResponse(code = 9004, message = "이미 삭제된 히스토리 입니다.")
+            @ApiResponse(code = 7000, message = "파일 업로드에 실패하였습니다."),
+            @ApiResponse(code = 7001, message = "이미 삭제된 히스토리 입니다."),
+            @ApiResponse(code = 9001, message = "Jwt Token Not Exist"),
+            @ApiResponse(code = 9002, message = "Invalid Signature"),
+            @ApiResponse(code = 9003, message = "Invalid Jwt Token"),
+            @ApiResponse(code = 9004, message = "Jwt Token Expired"),
+            @ApiResponse(code = 9004, message = "Not Our Token")
     })
     @PatchMapping("/history/{soundIdx}")
     public BaseResponse<PatchHistoryRes> removeHistory(@PathVariable("soundIdx") int soundIdx) {
