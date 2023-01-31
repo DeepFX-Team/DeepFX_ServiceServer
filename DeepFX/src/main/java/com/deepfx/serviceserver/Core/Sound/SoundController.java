@@ -7,10 +7,7 @@ import com.deepfx.serviceserver.Core.Sound.Model.PatchHistoryRes;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryReq;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryRes;
 import com.deepfx.serviceserver.Util.JwtUtility;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +40,15 @@ public class SoundController {
             @ApiResponse(code = 7000, message = "파일 업로드에 실패하였습니다."),
             @ApiResponse(code = 9004, message = "Jwt Token Expired")
     })
+    @ApiImplicitParam(
+            name = "soundFile"
+            ,required = true
+            ,dataType = "MultipartFile"
+            ,paramType = "query"
+            ,defaultValue = "None"
+    )
     @PostMapping("/history")
-    public BaseResponse<PostHistoryRes> saveHistory(@RequestBody PostHistoryReq postHistoryReq) {
+    public BaseResponse<PostHistoryRes> saveHistory(@RequestBody PostHistoryReq postHistoryReq, @RequestParam("soundFile") MultipartFile soundFile) {
 
         try{
             String jwtToken = JwtUtility.getJwt();
@@ -55,7 +59,7 @@ public class SoundController {
 
             int userIdx = JwtUtility.getUserIdx(jwtToken);
 
-            return new BaseResponse<>(soundService.saveHistory(postHistoryReq.getSoundFile(), postHistoryReq.getFileName(), userIdx));
+            return new BaseResponse<>(soundService.saveHistory(soundFile, postHistoryReq.getFileName(), userIdx));
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
@@ -73,7 +77,7 @@ public class SoundController {
             @ApiResponse(code = 9004, message = "이미 삭제된 히스토리 입니다.")
     })
     @PatchMapping("/history/{soundIdx}")
-    public BaseResponse<PatchHistoryRes> removeHistory(@ApiParam(name = "soundIdx", example = "1", required = true) @PathVariable("soundIdx") int soundIdx) {
+    public BaseResponse<PatchHistoryRes> removeHistory(@PathVariable("soundIdx") int soundIdx) {
         try{
             String jwtToken = JwtUtility.getJwt();
 
