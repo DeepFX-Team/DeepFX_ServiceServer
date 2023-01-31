@@ -12,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostHistoryReq {
-    @ApiModelProperty(name = "soundFile", example = "File", required = true)
-    private MultipartFile soundFile;
-    @ApiModelProperty(name = "fileName", example = "ExampleFile", required = true)
+    @ApiModelProperty(name = "fileName", example = "ExampleFileName", required = true)
     private String fileName;
 }

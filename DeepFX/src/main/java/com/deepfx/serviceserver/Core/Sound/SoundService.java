@@ -47,6 +47,7 @@ public class SoundService {
 
             return soundDao.saveHistory(fileName, fileUrl, userIdx);
         }catch (Exception exception) {
+            logger.error(exception.getMessage(), "Error in History save");
             throw new BaseException(BaseServerStatus.DATABASE_ERROR);
         }
 
