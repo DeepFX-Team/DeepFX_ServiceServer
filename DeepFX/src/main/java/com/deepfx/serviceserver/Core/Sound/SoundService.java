@@ -33,7 +33,7 @@ public class SoundService {
      * */
     public PostHistoryRes saveHistory(MultipartFile soundFile, String fileName, int userIdx) throws BaseException {
 
-        String fileUrl;
+        String fileUrl = "test";
 
         try{
             fileUrl = s3Util.upload2S3(soundFile, "sound");
@@ -43,8 +43,6 @@ public class SoundService {
         }
 
         try{
-            fileName = fileName.split(".")[0];
-
             return soundDao.saveHistory(fileName, fileUrl, userIdx);
         }catch (Exception exception) {
             logger.error(exception.getMessage(), "Error in History save");

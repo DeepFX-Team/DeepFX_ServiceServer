@@ -26,7 +26,8 @@ public class SoundDao {
 
         Object[] insertSoundParams = new Object[] {
                 userIdx,
-                fileName,
+                fileName.split("\\.")[0],
+                fileName.split("\\.")[1],
                 fileUrl
         };
         this.jdbcTemplate.update(insertSoundQuery,insertSoundParams);
