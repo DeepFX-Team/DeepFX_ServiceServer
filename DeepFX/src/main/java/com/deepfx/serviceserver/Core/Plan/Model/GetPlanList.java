@@ -18,5 +18,5 @@ public class GetPlanList {
     @ApiModelProperty(name = "planPrice", example = "19.99", required = true)
     private float planPrice;
     @ApiModelProperty(name = "planDesc", example = "Test", required = true)
-    private String planDesc;
+    private String[] planDesc;
 }

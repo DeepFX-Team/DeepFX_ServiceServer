@@ -24,9 +24,11 @@ public class UserDao {
      * */
     public GetUserInfoRes getUserInfo(int userIdx) {
         String queryString =
-                "select userIdx, email, planName, name, `group`\n" +
-                "from User left join Plan P on User.planIdx = P.planIdx\n" +
-                "where userIdx = ?;";
+                "select U.userIdx, U.email, P.planName, U.name, U.`group`, P.planPrice, PM.planEnd, P.planDesc\n" +
+                "from User U\n" +
+                "left join PlanMatching PM on U.userIdx = PM.userIdx\n" +
+                "left join Plan P on P.planIdx = PM.planIdx\n" +
+                "where U.userIdx = ? and U.status = 'ACTIVE';";
 
         return this.jdbcTemplate.queryForObject(queryString, (rs, rowNum)
                 -> new GetUserInfoRes(
@@ -34,7 +36,10 @@ public class UserDao {
                         rs.getString("email"),
                         rs.getString("planName"),
                         rs.getString("name"),
-                        rs.getString("group")
+                        rs.getString("group"),
+                        rs.getFloat("planPrice"),
+                        rs.getString("planEnd"),
+                        rs.getString("planDesc").split(",")
                 ), userIdx);
     }
 
@@ -60,15 +65,19 @@ public class UserDao {
      * 유저 정보 수정 API - Dao
      * */
     public PatchUserInfoRes patchUserInfo(int userIdx, PatchUserInfoReq patchUserInfoReq) {
-        String queryString = "update User set email = ?, `group` = ? where userIdx = ?;";
+        String queryString = "update User set name = ?, email = ?, `group` = ? where userIdx = ?;";
         Object[] queryParams = new Object[] {
+                patchUserInfoReq.getUserName(),
                 patchUserInfoReq.getEmail(),
                 patchUserInfoReq.getGroup(),
                 userIdx
         };
 
         return new PatchUserInfoRes(
-                this.jdbcTemplate.update(queryString, queryParams) > 0
+                this.jdbcTemplate.update(queryString, queryParams) > 0,
+                patchUserInfoReq.getUserName(),
+                patchUserInfoReq.getEmail(),
+                patchUserInfoReq.getGroup()
         );
     }
 }

@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatchUserInfoReq {
+    @ApiModelProperty(name = "userName", example = "Jack", required = true)
+    private String userName;
     @ApiModelProperty(name = "email", example = "example@example.com", required = true)
     private String email;
     @ApiModelProperty(name = "group", example = "PeopleSpace", required = true)

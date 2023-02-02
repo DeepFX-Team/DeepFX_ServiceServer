@@ -26,6 +26,7 @@ public class PlanService {
         try{
             return planDao.selectPlan(planIdx, userIdx);
         }catch (Exception exception) {
+            logger.error(exception.getMessage());
             throw new BaseException(BaseServerStatus.DATABASE_ERROR);
         }
     }

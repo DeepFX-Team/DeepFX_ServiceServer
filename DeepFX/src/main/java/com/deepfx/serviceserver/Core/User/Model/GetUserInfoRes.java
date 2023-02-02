@@ -22,4 +22,10 @@ public class GetUserInfoRes {
     private String userName;
     @ApiModelProperty(name = "groupName", example = "PeopleSpace", required = true)
     private String groupName;
+    @ApiModelProperty(name = "planPrice", example = "9.99", required = true)
+    private float planPrice;
+    @ApiModelProperty(name = "planEnd", example = "2023-02-28", required = true)
+    private String planEnd;
+    @ApiModelProperty(name = "planDesc", example = "String Array", required = true)
+    private String[] planDesc;
 }
