@@ -18,4 +18,8 @@ public class GetUserInfoRes {
     private String email;
     @ApiModelProperty(name = "planName", example = "planName", required = true)
     private String planName;
+    @ApiModelProperty(name = "userName", example = "Jack", required = true)
+    private String userName;
+    @ApiModelProperty(name = "groupName", example = "PeopleSpace", required = true)
+    private String groupName;
 }

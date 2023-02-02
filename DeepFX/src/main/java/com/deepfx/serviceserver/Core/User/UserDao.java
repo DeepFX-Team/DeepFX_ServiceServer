@@ -24,7 +24,7 @@ public class UserDao {
      * */
     public GetUserInfoRes getUserInfo(int userIdx) {
         String queryString =
-                "select userIdx, email, planName\n" +
+                "select userIdx, email, planName, name, `group`\n" +
                 "from User left join Plan P on User.planIdx = P.planIdx\n" +
                 "where userIdx = ?;";
 
@@ -32,7 +32,9 @@ public class UserDao {
                 -> new GetUserInfoRes(
                         rs.getInt("userIdx"),
                         rs.getString("email"),
-                        rs.getString("planName")
+                        rs.getString("planName"),
+                        rs.getString("name"),
+                        rs.getString("group")
                 ), userIdx);
     }
 
