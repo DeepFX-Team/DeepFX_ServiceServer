@@ -23,6 +23,7 @@ public class AuthDao {
      * */
     public PostSignupRes userSignUp(PostSignupReq postSignupReq) {
         String queryString = "insert into User (userId,password, name, `group`, email) values(?, ?, ?, ?, ?);";
+        String planInsertString = "insert into PlanMatching (userIdx, planIdx, planEnd) values (last_insert_id(), 0, now());";
         Object[] queryParams = new Object[] {
                 postSignupReq.getId(),
                 postSignupReq.getPassword(),
@@ -31,7 +32,9 @@ public class AuthDao {
                 postSignupReq.getEmail()
         };
 
+
         this.jdbcTemplate.update(queryString, queryParams);
+        this.jdbcTemplate.update(planInsertString);
 
         return new PostSignupRes(true);
     }
