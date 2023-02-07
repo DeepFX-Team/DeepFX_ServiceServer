@@ -2,9 +2,11 @@ package com.deepfx.serviceserver.Core.Sound;
 
 import com.deepfx.serviceserver.Core.Sound.Model.PatchHistoryRes;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryRes;
+import com.deepfx.serviceserver.Core.Sound.Model.PostUploadRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.DataSource;
 
@@ -15,14 +17,9 @@ public class SoundDao {
     @Autowired
     public void getDataSource(DataSource dataSource) { this.jdbcTemplate = new JdbcTemplate(dataSource);}
 
-    /**
-     * 히스토리 생성 API - Dao
-     * */
-    public PostHistoryRes saveHistory(String fileName, String fileUrl, int userIdx) {
-
+    public PostUploadRes uploadFile(String fileName, int userIdx, String fileUrl) {
         String insertSoundQuery = "insert into Sound(soundOwnerIdx, soundName, soundExt, soundURL) values(?, ?, ?, ?);";
         String getInsertedIdxQuery = "select last_insert_id()";
-        String insertHistoryQuery = "insert into History(userIdx, soundIdx) values(?, ?)";
 
         Object[] insertSoundParams = new Object[] {
                 userIdx,
@@ -30,14 +27,24 @@ public class SoundDao {
                 fileName.split("\\.")[1],
                 fileUrl
         };
+
         this.jdbcTemplate.update(insertSoundQuery,insertSoundParams);
 
         int insertedId = this.jdbcTemplate.queryForObject(getInsertedIdxQuery, int.class);
 
+        return new PostUploadRes(insertedId, fileUrl, fileName);
+    }
+    /**
+     * 히스토리 생성 API - Dao
+     * */
+    public PostHistoryRes saveHistory(int soundIdx, int userIdx) {
+        String insertHistoryQuery = "insert into History(userIdx, soundIdx) values(?, ?)";
+
         Object[] insertHistoryParams =  new Object[] {
                 userIdx,
-                insertedId
+                soundIdx
         };
+
         boolean isSuccess = this.jdbcTemplate.update(insertHistoryQuery, insertHistoryParams) > 0;
 
         return new PostHistoryRes(isSuccess);

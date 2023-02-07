@@ -4,6 +4,7 @@ import com.deepfx.serviceserver.Base.BaseException;
 import com.deepfx.serviceserver.Base.BaseServerStatus;
 import com.deepfx.serviceserver.Core.Sound.Model.PatchHistoryRes;
 import com.deepfx.serviceserver.Core.Sound.Model.PostHistoryRes;
+import com.deepfx.serviceserver.Core.Sound.Model.PostUploadRes;
 import com.deepfx.serviceserver.Util.S3Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,9 @@ public class SoundService {
     }
 
     /**
-     * 사운드 히스토리 생성 API - Service
+     * 파일 업로드
      * */
-    public PostHistoryRes saveHistory(MultipartFile soundFile, String fileName, int userIdx) throws BaseException {
+    public PostUploadRes uploadFile(MultipartFile soundFile, int userIdx) throws BaseException{
 
         String fileUrl = "test";
 
@@ -43,12 +44,22 @@ public class SoundService {
         }
 
         try{
-            return soundDao.saveHistory(fileName, fileUrl, userIdx);
+            return soundDao.uploadFile(soundFile.getOriginalFilename(),userIdx, fileUrl);
+        }catch (Exception exception){
+            throw new BaseException(BaseServerStatus.DATABASE_ERROR);
+        }
+    }
+    /**
+     * 사운드 히스토리 생성 API - Service
+     * */
+    public PostHistoryRes saveHistory(int soundIdx, int userIdx) throws BaseException {
+
+        try{
+            return soundDao.saveHistory(soundIdx, userIdx);
         }catch (Exception exception) {
             logger.error(exception.getMessage(), "Error in History save");
             throw new BaseException(BaseServerStatus.DATABASE_ERROR);
         }
-
     }
 
     /**
